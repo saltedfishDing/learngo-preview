@@ -1,0 +1,18 @@
+system:
+  addr: '0.0.0.0'
+  port: 8080
+  web: 'true'
+
+database:
+  host: '127.0.0.1'
+  port: '3306'
+  username: 'root'
+  password: 'root'
+  db-name: 'ding'
+  max-idle-conns: 10
+  max-open-conns: 100
+  log-mode: 'true'
+  config: 'charset=utf8&parseTime=True&loc=Local'
+
+
+

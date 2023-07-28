@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.title}}</title>
+    <link rel="stylesheet" href="/assets/plugin/elementui/index.css">
+    <style>
+        .box-card{
+            margin: 10px;
+        }
+        .info-img{
+            height:200px;
+            margin: 5px
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="main">
+        <div v-for="item in list">
+            <el-card class="box-card">
+                <div>
+                    <el-image
+                            class="info-img"
+                            v-for="(img,index) in item.images"
+                            :src="img"
+                            :preview-src-list="item.images"
+                            :initial-index="index"
+                    >
+                    </el-image>
+                </div>
+
+                <div>
+                    时间：{[item.login_date]}
+                </div>
+            </el-card>
+        </div>
+
+        <el-pagination
+                background
+                layout="prev, pager, next"
+                :total="total"
+                :page-size="pageSize"
+        >
+        </el-pagination>
+
+    </div>
+</body>
+<script src="/assets/plugin/vue/vue.js"></script>
+<script src="/assets/plugin/elementui/index.js"></script>
+<script src="/assets/plugin/axios/axios.js"></script>
+<script>
+    let app = new Vue({
+        delimiters:['{[',']}'],
+        el : '#main',
+        data(){
+            return {
+                list : [],
+                page : 1,
+                total : 0,
+                pageSize : 20,
+            }
+        },
+        mounted(){
+            this.getList();
+        },
+
+        methods:{
+            getInfoList(params){
+                let url = '/record';
+                return axios.get(url,{
+                    'params' : params
+                });
+            },
+
+            getList(){
+                this.getInfoList().then((result) => {
+                    console.log(result)
+                    this.list = result.data.data.list
+                })
+            },
+
+
+        },
+    });
+
+</script>
+</html>
